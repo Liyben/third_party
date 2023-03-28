@@ -3,8 +3,11 @@
 # Copyright 2019-2020 Eugene Molotov <https://it-projects.info/team/em230418>
 import os
 
+import logging
+
 import boto3
 
+from botocore.exceptions import ClientError
 from odoo import _, api, fields, models
 
 
@@ -35,10 +38,36 @@ class S3Settings(models.TransientModel):
         return res
 
     def get_s3_obj_url(self, bucket, file_id):
-        base_url = self._get_s3_settings("s3.obj_url", "S3_OBJ_URL")
+        """ base_url = self._get_s3_settings("s3.obj_url", "S3_OBJ_URL")
         if base_url:
-            return base_url + file_id
-        return "https://{}.s3.amazonaws.com/{}".format(bucket.name, file_id)
+            return base_url + file_id 
+        return "https://{}.s3.amazonaws.com/{}".format(bucket.name, file_id) """
+
+        access_key_id = self._get_s3_settings("s3.access_key_id", "S3_ACCESS_KEY_ID")
+        secret_key = self._get_s3_settings("s3.secret_key", "S3_SECRET_KEY")
+        endpoint_url = self._get_s3_settings("s3.endpoint_url", "S3_ENDPOINT_URL")
+
+        if not access_key_id or not secret_key or not bucket.name:
+            raise NotAllCredentialsGiven(
+                _("Amazon S3 credentials are not defined properly")
+            )
+
+        s3_client = boto3.client(
+            "s3",
+            aws_access_key_id=access_key_id,
+            aws_secret_access_key=secret_key,
+            endpoint_url=endpoint_url,
+        )
+        expiration=3600
+        
+        try:
+            response = s3_client.generate_presigned_url('get_object', Params={'Bucket': bucket.name, 'Key': file_id}, ExpiresIn=expiration)
+        except ClientError as e:
+            logging.error(e)
+            return None
+
+        # URL prefirmada
+        return response
 
     def get_s3_bucket(self):
         access_key_id = self._get_s3_settings("s3.access_key_id", "S3_ACCESS_KEY_ID")

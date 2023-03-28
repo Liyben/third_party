@@ -146,7 +146,7 @@ class IrAttachment(models.Model):
             ContentType=mimetype,
             ContentDisposition='attachment; filename="%s"' % filename,
         )
-
+        
         _logger.debug("uploaded file with id {}".format(file_id))
         obj_url = self.env["res.config.settings"].get_s3_obj_url(bucket, file_id)
         return PREFIX + file_id, file_id, obj_url
