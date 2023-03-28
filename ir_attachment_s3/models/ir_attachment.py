@@ -142,7 +142,7 @@ class IrAttachment(models.Model):
         bucket.put_object(
             Key=file_id,
             Body=bin_data,
-            ACL="public-read",
+            ACL="private",
             ContentType=mimetype,
             ContentDisposition='attachment; filename="%s"' % filename,
         )
