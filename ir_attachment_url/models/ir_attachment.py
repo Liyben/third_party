@@ -8,7 +8,7 @@ import logging
 
 import requests
 
-from odoo import api, models
+from odoo import api, models, fields
 
 _logger = logging.getLogger(__name__)
 
@@ -16,6 +16,8 @@ _logger = logging.getLogger(__name__)
 class IrAttachment(models.Model):
 
     _inherit = "ir.attachment"
+
+    s3_store_fname = fields.Char('Stored Filename in s3 ')
 
     @api.depends("store_fname", "db_datas")
     def _compute_raw(self):
@@ -76,7 +78,7 @@ class IrAttachment(models.Model):
         bin_data = base64.b64decode(data) if data else b""
         if not checksum:
             checksum = self._compute_checksum(bin_data)
-        fname, url = self._file_write_with_bucket(
+        fname, s3_store_fname, url = self._file_write_with_bucket(
             bucket, bin_data, filename, mimetype, checksum
         )
         return {
@@ -84,6 +86,7 @@ class IrAttachment(models.Model):
             "checksum": checksum,
             "index_content": self._index(bin_data, mimetype),
             "store_fname": fname,
+            "s3_store_fname": s3_store_fname,
             "db_datas": False,
             "type": "binary",
             "url": url,
@@ -132,5 +135,5 @@ class IrAttachment(models.Model):
             new_store_fname, url = self._file_write_with_bucket(
                 bucket, bin_data, attach.name, attach.mimetype, checksum
             )
-            attach.write({"store_fname": new_store_fname, "url": url})
+            attach.write({"s3_store_fname": new_store_fname, "url": url})
             self._file_delete(old_store_fname)
