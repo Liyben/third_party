@@ -8,7 +8,7 @@
 
 import logging
 
-from odoo import _, models, api
+from odoo import _, models
 from odoo.exceptions import MissingError
 from odoo.tools.safe_eval import safe_eval
 
@@ -59,8 +59,9 @@ class IrAttachment(models.Model):
 
         return super(IrAttachment, self - s3_records)._inverse_datas()
 
-    """ def _file_read(self, fname):
+    def _file_read(self, fname):
         if not fname.startswith(PREFIX):
+            _logger.debug("reading file with id {}".format(fname))
             return super(IrAttachment, self)._file_read(fname)
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
@@ -70,34 +71,7 @@ class IrAttachment(models.Model):
 
         obj = bucket.Object(file_id)
         data = obj.get()
-        return data["Body"].read() """
-    
-    @api.model
-    def _file_read(self, fname):
-        if fname.startswith(PREFIX):
-            return super(IrAttachment, self)._file_read(fname)
-        else:
-            return self._file_read_with_bucket(fname)
-
-    @api.model
-    def _file_read_with_bucket(self, fname):
-
-        """ bucket = None
-        try:
-            bucket = self.env["res.config.settings"].get_s3_bucket()
-        except NotAllCredentialsGiven:
-            _logger.info("Could not get S3 bucket. Not all credentials given")
-        except Exception:
-            _logger.exception("Could not get S3 bucket")
-
-        if not bucket:
-            return super(IrAttachment, self)._file_read(fname)
-        
-         """
-
-        file_id = fname[len(PREFIX) :]
-        _logger.debug("reading file with id {}".format(file_id))
-
+        return data["Body"].read()
 
     def _file_delete(self, fname):
         if not fname.startswith(PREFIX):
