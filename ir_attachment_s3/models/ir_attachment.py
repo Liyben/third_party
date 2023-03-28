@@ -74,7 +74,7 @@ class IrAttachment(models.Model):
     
     @api.model
     def _file_read(self, fname):
-        if not fname.startswith(PREFIX):
+        if fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_read(fname)
         else:
             return self._file_read_with_bucket(fname)
