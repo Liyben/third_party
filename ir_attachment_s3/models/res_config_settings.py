@@ -45,7 +45,6 @@ class S3Settings(models.TransientModel):
 
         access_key_id = self._get_s3_settings("s3.access_key_id", "S3_ACCESS_KEY_ID")
         secret_key = self._get_s3_settings("s3.secret_key", "S3_SECRET_KEY")
-        endpoint_url = self._get_s3_settings("s3.endpoint_url", "S3_ENDPOINT_URL")
 
         if not access_key_id or not secret_key or not bucket.name:
             raise NotAllCredentialsGiven(
@@ -56,9 +55,9 @@ class S3Settings(models.TransientModel):
             "s3",
             aws_access_key_id=access_key_id,
             aws_secret_access_key=secret_key,
-            endpoint_url=endpoint_url,
+            region_name = 'eu-west-3'
         )
-        expiration=3600
+        expiration=900
         
         try:
             response = s3_client.generate_presigned_url('get_object', Params={'Bucket': bucket.name, 'Key': file_id}, ExpiresIn=expiration)
