@@ -21,6 +21,7 @@ class S3Settings(models.TransientModel):
     s3_bucket = fields.Char(string="S3 bucket name", help="i.e. 'attachmentbucket'")
     s3_access_key_id = fields.Char(string="S3 access key id")
     s3_secret_key = fields.Char(string="S3 secret key")
+    s3_region_name = fields.Char(string="S3 Region Name")
     s3_endpoint_url = fields.Char(string="S3 Endpoint")
     s3_obj_url = fields.Char(string="S3 URL")
     s3_condition = fields.Char(
@@ -45,6 +46,8 @@ class S3Settings(models.TransientModel):
 
         access_key_id = self._get_s3_settings("s3.access_key_id", "S3_ACCESS_KEY_ID")
         secret_key = self._get_s3_settings("s3.secret_key", "S3_SECRET_KEY")
+        endpoint_url = self._get_s3_settings("s3.endpoint_url", "S3_ENDPOINT_URL")
+        region_name = self._get_s3_settings("s3.region_name", "S3_REGION_NAME")
 
         if not access_key_id or not secret_key or not bucket.name:
             raise NotAllCredentialsGiven(
@@ -55,7 +58,8 @@ class S3Settings(models.TransientModel):
             "s3",
             aws_access_key_id=access_key_id,
             aws_secret_access_key=secret_key,
-            region_name = 'eu-west-3'
+            endpoint_url=endpoint_url,
+            region_name = region_name
         )
         expiration=900
         
@@ -98,6 +102,7 @@ class S3Settings(models.TransientModel):
         s3_bucket = ICPSudo.get_param("s3.bucket", default="")
         s3_access_key_id = ICPSudo.get_param("s3.access_key_id", default="")
         s3_secret_key = ICPSudo.get_param("s3.secret_key", default="")
+        s3_region_name = ICPSudo.get_param("s3.region_name", default="")
         s3_endpoint_url = ICPSudo.get_param("s3.endpoint_url", default="")
         s3_obj_url = ICPSudo.get_param("s3.obj_url", default="")
         s3_condition = ICPSudo.get_param("s3.condition", default="")
@@ -109,6 +114,7 @@ class S3Settings(models.TransientModel):
             s3_condition=s3_condition,
             s3_endpoint_url=s3_endpoint_url,
             s3_obj_url=s3_obj_url,
+            s3_region_name=s3_region_name,
         )
         return res
 
@@ -118,6 +124,7 @@ class S3Settings(models.TransientModel):
         ICPSudo.set_param("s3.bucket", self.s3_bucket or "")
         ICPSudo.set_param("s3.access_key_id", self.s3_access_key_id or "")
         ICPSudo.set_param("s3.secret_key", self.s3_secret_key or "")
+        ICPSudo.set_param("s3.region_name", self.s3_region_name or "")
         ICPSudo.set_param("s3.endpoint_url", self.s3_endpoint_url or "")
         ICPSudo.set_param("s3.obj_url", self.s3_obj_url or "")
         ICPSudo.set_param("s3.condition", self.s3_condition or "")
