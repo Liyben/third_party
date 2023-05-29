@@ -34,13 +34,10 @@ class IrHttp(models.AbstractModel):
         result['disk_mem_used_percent'] = f'{disk_mem_info.percent} %'
         result['disk_mem_free'] = f'{(disk_mem_info.free/(1024*1024*1024)):.2f} GB'
 
-        host_name = self.env['ir.config_parameter'].get_param('host_name')
-        _logger.debug('\n'+host_name+'\n')
         ip4_info = ni.ifaddresses('ens3')[ni.AF_INET][0]['addr']
         result['ip4_info'] = f'{(ip4_info)}'
         ip6_info = ni.ifaddresses('ens3')[ni.AF_INET6][0]['addr']
         result['ip6_info'] = f'{(ip6_info)}'
-        result['host_name'] = f'La dirección IP de '
         return result
 
 
@@ -55,6 +52,15 @@ class ServerInfoSettings(models.TransientModel):
             _logger.error(f" {ex}")
 
         return '5000'
+    
+    def _get_host_name(self):
+        try:
+            host_name = self.env['ir.config_parameter'].get_param('host_name')
+            return f'La dirección IP de {host_name} es {socket.gethostbyname(host_name)}'
+        except Exception as ex:
+            _logger.error(f" {ex}")
+
+        return ''
 
     update_frequency = fields.Selection(
         string='Time between updates',
@@ -70,4 +76,8 @@ class ServerInfoSettings(models.TransientModel):
         ],
         default=_get_current_frequency,
         required=True
+    )
+    host_name = fields.Char(
+        default=_get_host_name,
+        readonly=True
     )

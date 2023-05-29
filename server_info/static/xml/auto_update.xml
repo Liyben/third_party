@@ -51,8 +51,6 @@
                     <br/>
                     <span class="font-weight-bold w-auto">IPv6: </span>
                     <span name="ip6_info"/>
-                    <br/>
-                    <span name="host_name"/>
                 </div>
             </div>
         </div>

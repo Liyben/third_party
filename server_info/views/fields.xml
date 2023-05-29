@@ -7,6 +7,16 @@
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@class='settings']" position="inside">
+                    <div class="app_settings_block" data-string="URL/Dominio Info" data-key="domain_info">
+                        <h2>URL/Dominio Info</h2>
+                        <div class="row mt16 o_settings_container" name="domain_info_container">
+                            <div class="col-12 col-lg-6 o_setting_box" id="domain_info_setting">
+                                <div class="o_setting_right_pane">
+                                    <h3><field name="host_name"/></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="app_settings_block" data-string="Server Info" data-key="server_info">
                         <h2>Server Info Settings</h2>
                         <div class="row mt16 o_settings_container" name="server_info_setting_container">
