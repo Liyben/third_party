@@ -71,6 +71,10 @@ odoo.define('server_info.auto_update', function (require) {
             self.$('[name="disk_mem_used"]').text(response.disk_mem_used);
             self.$('[name="disk_mem_used_percent"]').text(response.disk_mem_used_percent);
             self.$('[name="disk_mem_free"]').text(response.disk_mem_free);
+
+            self.$('[name="ip4_info"]').text(response.ip4_info);
+            self.$('[name="ip6_info"]').text(response.ip6_info);
+            self.$('[name="hostname"]').text(response.hostname);
         },
 
         _getCpuUsage: function () {
