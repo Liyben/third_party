@@ -39,7 +39,7 @@ class IrHttp(models.AbstractModel):
         result['ip4_info'] = f'{(ip4_info)}'
         ip6_info = ni.ifaddresses('ens3')[ni.AF_INET6][0]['addr']
         result['ip6_info'] = f'{(ip6_info)}'
-        result['hostname'] = f'La dirección IP de {host_name} es {socket.gethostbyname(host_name)}'
+        #result['hostname'] = f'La dirección IP de {host_name} es {socket.gethostbyname(host_name)}'
         return result
 
 
