@@ -74,7 +74,7 @@ odoo.define('server_info.auto_update', function (require) {
 
             self.$('[name="ip4_info"]').text(response.ip4_info);
             self.$('[name="ip6_info"]').text(response.ip6_info);
-            /* self.$('[name="hostname"]').text(response.hostname); */
+            self.$('[name="hostname"]').text(response.hostname);
         },
 
         _getCpuUsage: function () {

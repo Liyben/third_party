@@ -5,6 +5,7 @@
     This module add new tab 'Server Info' in settings.
     This tab contains automatically updated informations about server cpu, ram and disk usage.
     It also allows you to change frequency of informations updates.
+    Add a new system parameter to specify the host name.
     ''',
     'author': 'myOdoo.pl',
     'website': 'https://myodoo.pl',
@@ -22,7 +23,8 @@
     'data': [
         'views/fields.xml',
         'views/assets.xml',
-        'data/settings_records.xml'
+        'data/settings_records.xml',
+        'data/system_parameters.xml'
     ],
     'qweb': [
         'static/src/xml/auto_update.xml',
