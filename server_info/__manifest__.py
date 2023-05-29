@@ -14,7 +14,7 @@
     'license': 'LGPL-3',
     'images': ['static/description/banner.png', 'static/description/usage.png'],
     'external_dependencies': {
-        "python": ["psutil"]
+        "python": ["psutil","netifaces","socket"]
     },
     'depends': [
         'base_setup',

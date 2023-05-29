@@ -35,11 +35,12 @@ class IrHttp(models.AbstractModel):
         result['disk_mem_free'] = f'{(disk_mem_info.free/(1024*1024*1024)):.2f} GB'
 
         host_name = self.env['ir.config_parameter'].get_param('host_name')
+        _logger.debug('\n'+host_name+'\n')
         ip4_info = ni.ifaddresses('ens3')[ni.AF_INET][0]['addr']
         result['ip4_info'] = f'{(ip4_info)}'
         ip6_info = ni.ifaddresses('ens3')[ni.AF_INET6][0]['addr']
         result['ip6_info'] = f'{(ip6_info)}'
-        result['hostname'] = f'La dirección IP de {host_name} es {socket.gethostbyname(host_name)}'
+        result['host_name'] = f'La dirección IP de {host_name} es {socket.gethostbyname(host_name)}'
         return result
 
 
