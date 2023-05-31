@@ -44,6 +44,7 @@ class IrHttp(models.AbstractModel):
 class ServerInfoSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    @api.multi
     def _get_current_frequency(self):
         try:
             return self.env['res.config.settings'].search_read([], ['update_frequency'])[-1][
@@ -53,6 +54,7 @@ class ServerInfoSettings(models.TransientModel):
 
         return '5000'
     
+    @api.multi
     def _get_host_name(self):
         try:
             host_name = self.env['ir.config_parameter'].get_param('host_name')
