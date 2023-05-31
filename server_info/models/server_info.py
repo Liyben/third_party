@@ -63,6 +63,16 @@ class ServerInfoSettings(models.TransientModel):
             _logger.error(f" {ex}")
 
         return ''
+    
+    @api.multi
+    def _get_cpu_usage(self):
+        try:
+            
+            return f'{psutil.cpu_percent()} %'
+        except Exception as ex:
+            _logger.error(f" {ex}")
+
+        return ''
 
     update_frequency = fields.Selection(
         string='Time between updates',
@@ -83,5 +93,8 @@ class ServerInfoSettings(models.TransientModel):
         default=_get_host_name,
         readonly=True
     )
-    
+    cpu_usage = fields.Char(
+        compute=_get_cpu_usage,
+        readonly=True
+    )    
     
