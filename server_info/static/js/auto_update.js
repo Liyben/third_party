@@ -18,23 +18,22 @@ odoo.define('server_info.auto_update', function (require) {
         start: function () {
             var self = this;
             return this._super.apply(arguments).then(function(){
-                self._update_fields(session);
-                /* setTimeout(function(){
+                setTimeout(function(){
                     self._update_fields(session);
                 }, 500);
-                self.auto_update_interval = self._get_interval(self, self.interval); */
+                self.auto_update_interval = self._get_interval(self, self.interval);
             });
         },
 
-       /* destroy: function () {
+        destroy: function () {
             clearInterval(this.auto_update_interval);
         },
 
-        _change_interval: function (widget, interval){ */
+        _change_interval: function (widget, interval){
             /*
              * Swap interval for new if interval in settings is changed
              */
-           /*  if (interval != widget.interval && !isNaN(interval) && interval != null)
+            if (interval != widget.interval && !isNaN(interval) && interval != null)
             {
                 clearInterval(widget.auto_update_interval);
                 widget.interval = interval;
@@ -44,19 +43,19 @@ odoo.define('server_info.auto_update', function (require) {
             return false;
         },
 
-        _get_interval: function (widget, interval) { */
+        _get_interval: function (widget, interval) {
             /*
              * Returns new interval
              */
-           /*  return setInterval(function (){
+            return setInterval(function (){
                 widget._getCpuUsage().then(function (response){
                     widget._update_fields(response);
                     widget._change_interval(widget, response.interval);
                 });
             }, interval);
-        }, */
+        },
 
-        _update_fields: function (response) { 
+        _update_fields: function (response) {
             /*
              * Put values from response to corresponding elements in template
              */
@@ -75,7 +74,7 @@ odoo.define('server_info.auto_update', function (require) {
 
             self.$('[name="ip4_info"]').text(response.ip4_info);
             self.$('[name="ip6_info"]').text(response.ip6_info);
-        }, 
+        },
 
         _getCpuUsage: function () {
             return this._rpc({
