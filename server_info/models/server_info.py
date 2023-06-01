@@ -6,21 +6,6 @@ import socket
 
 _logger = logging.getLogger(__name__)
 
-class ResCompany(models.Model):
-    _inherit = 'res.company'
-
-    @api.multi
-    def _get_host_name(self):
-        for record in self:
-            record['host_name'] = f'{psutil.cpu_percent()} %'
-        
-    
-    host_name = fields.Char(
-        string='Uso',
-        compute=_get_host_name,
-        readonly=True
-    )
-
 class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
 

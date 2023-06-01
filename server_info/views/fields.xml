@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="res_config_settings_view_form_modification" model="ir.ui.view">
+        <!-- <record id="res_config_settings_view_form_modification" model="ir.ui.view">
             <field name="name">res.config.settings.view.form.modification</field>
             <field name="model">res.config.settings</field>
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
@@ -29,6 +29,42 @@
                     </div>
                 </xpath>
             </field>
+        </record> -->
+
+        <record id="server_info_view_inherit_view" model="ir.ui.view">
+            <field name="name">server.info.view.inherit.view</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Información del Sistema" name="server_info_forms">
+                        <group string="URL/Dominio Info">
+                            <field name="host_name"/>
+                        </group>
+                        <group string="Server Info">
+                            <group string="CPU">
+                                <field name="cpu_usage"/>
+                            </group>
+                            <group string="Memoria">
+                                <field name="mem_total"/>
+                                <field name="mem_used"/>
+                                <field name="mem_used_percent"/>
+                            </group>
+                            <group string="Almacenamiento">
+                                <field name="disk_mem_total"/>
+                                <field name="disk_mem_used"/>
+                                <field name="disk_mem_free"/>
+                                <field name="disk_mem_used_percent"/>
+                            </group>
+                            <group string="Host">
+                                <field name="ip4_info"/>
+                                <field name="ip6_info"/>
+                            </group>    
+                        </group>
+                    </page>
+                </xpath>
+            </field>
         </record>
+
     </data>
 </odoo>
