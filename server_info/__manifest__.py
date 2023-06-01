@@ -22,6 +22,7 @@
     ],
     'data': [
         'views/fields.xml',
+        'views/assets.xml',
         'data/settings_records.xml',
         'data/system_parameters.xml'
     ],
