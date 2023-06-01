@@ -9,7 +9,6 @@ _logger = logging.getLogger(__name__)
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    @api.depends('name')
     @api.multi
     def _get_host_name(self):
         for record in self:
@@ -17,6 +16,7 @@ class ResCompany(models.Model):
         
     
     host_name = fields.Char(
+        string='Uso',
         compute=_get_host_name,
         readonly=True
     )
