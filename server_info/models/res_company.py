@@ -22,7 +22,7 @@ class ResCompany(models.Model):
 
             mem_info = psutil.virtual_memory()
             record['mem_total'] = f'{(mem_info.total/(1024*1024*1024)):.2f} GB'
-            record['mem_used'] = f'{(mem_info.used/(1024*1024*1024)):.2f} GB'
+            record['mem_used'] = f'{((mem_info.total - mem_info.available)/(1024*1024*1024)):.2f} GB'
             record['mem_used_percent'] = f'{mem_info.percent} %'
 
             disk_mem_info = psutil.disk_usage('/')
