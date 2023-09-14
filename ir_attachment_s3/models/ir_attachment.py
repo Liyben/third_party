@@ -82,7 +82,7 @@ class IrAttachment(models.Model):
         PREFIX_DEL = "https://{}.s3.amazonaws.com/".format(bucket_name)
 
         if not fname.startswith(PREFIX_DEL):
-            _logger.debug("deleting file with id {}".format(fname))
+            _logger.debug("(NO PREFIX) deleting file with id {}".format(fname))
             return super(IrAttachment, self)._file_delete(fname)
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
