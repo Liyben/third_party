@@ -61,7 +61,7 @@ class IrAttachment(models.Model):
 
     def _file_read(self, fname):
 
-        if not self.s3_store_fname.startswith(PREFIX):
+        if self.s3_store_fname and not self.s3_store_fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_read(fname)
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
@@ -74,7 +74,7 @@ class IrAttachment(models.Model):
         return data["Body"].read()
 
     def _file_delete(self, fname):
-        if not self.s3_store_fname.startswith(PREFIX):
+        if self.s3_store_fname and not self.s3_store_fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_delete(fname)
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
