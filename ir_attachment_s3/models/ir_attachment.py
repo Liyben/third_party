@@ -60,6 +60,7 @@ class IrAttachment(models.Model):
         return super(IrAttachment, self - s3_records)._inverse_datas()
 
     def _file_read(self, fname):
+
         if not fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_read(fname)
 
@@ -149,4 +150,5 @@ class IrAttachment(models.Model):
 
         _logger.debug("uploaded file with id {}".format(file_id))
         obj_url = self.env["res.config.settings"].get_s3_obj_url(bucket, file_id)
+        _logger.debug("store_name with {}".format(PREFIX + file_id))
         return PREFIX + file_id, obj_url
