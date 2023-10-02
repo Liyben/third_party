@@ -61,12 +61,12 @@ class IrAttachment(models.Model):
 
     def _file_read(self, fname):
 
-        if not fname.startswith(PREFIX):
+        if not self.s3_store_fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_read(fname)
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
 
-        file_id = fname[len(PREFIX) :]
+        file_id = self.s3_store_fname[len(PREFIX) :]
         _logger.debug("reading file with id {}".format(file_id))
 
         obj = bucket.Object(file_id)
@@ -74,12 +74,12 @@ class IrAttachment(models.Model):
         return data["Body"].read()
 
     def _file_delete(self, fname):
-        if not fname.startswith(PREFIX):
+        if not self.s3_store_fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_delete(fname)
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
 
-        file_id = fname[len(PREFIX) :]
+        file_id = self.s3_store_fname[len(PREFIX) :]
         _logger.debug("deleting file with id {}".format(file_id))
 
         obj = bucket.Object(file_id)
@@ -150,5 +150,4 @@ class IrAttachment(models.Model):
 
         _logger.debug("uploaded file with id {}".format(file_id))
         obj_url = self.env["res.config.settings"].get_s3_obj_url(bucket, file_id)
-        _logger.debug("store_name with {}".format(PREFIX + file_id))
         return PREFIX + file_id, obj_url
