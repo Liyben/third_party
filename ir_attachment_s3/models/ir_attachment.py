@@ -60,7 +60,6 @@ class IrAttachment(models.Model):
         return super(IrAttachment, self - s3_records)._inverse_datas()
 
     def _file_read(self, fname):
-
         if not fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_read(fname)
 
@@ -74,7 +73,6 @@ class IrAttachment(models.Model):
         return data["Body"].read()
 
     def _file_delete(self, fname):
-        
         if not fname.startswith(PREFIX):
             return super(IrAttachment, self)._file_delete(fname)
 
@@ -144,11 +142,11 @@ class IrAttachment(models.Model):
         bucket.put_object(
             Key=file_id,
             Body=bin_data,
-            ACL="private",
+            ACL="public-read",
             ContentType=mimetype,
             ContentDisposition='attachment; filename="%s"' % filename,
         )
-        
+
         _logger.debug("uploaded file with id {}".format(file_id))
         obj_url = self.env["res.config.settings"].get_s3_obj_url(bucket, file_id)
-        return PREFIX + file_id, file_id, obj_url
+        return PREFIX + file_id, obj_url
