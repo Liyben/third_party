@@ -66,8 +66,9 @@ class IrAttachment(models.Model):
 
         bucket = self.env["res.config.settings"].get_s3_bucket()
 
-        file_id = self.s3_store_fname[len(PREFIX) :]
-        _logger.debug("reading file with id {}".format(file_id))
+        if self.s3_store_fname:
+            file_id = self.s3_store_fname[len(PREFIX) :]
+            _logger.debug("reading file with id {}".format(file_id))
 
         obj = bucket.Object(file_id)
         data = obj.get()
