@@ -31,7 +31,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'category': 'Tools',
-    'depends': ['base', 'mail', 'google_drive'],
+    'depends': ['base', 'mail',],
     'data': [
         'security/ir.model.access.csv',
         'data/data.xml',

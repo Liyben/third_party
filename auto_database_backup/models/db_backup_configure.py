@@ -77,7 +77,7 @@ class AutoDatabaseBackup(models.Model):
     auto_remove = fields.Boolean(string='Remove Old Backups')
     days_to_remove = fields.Integer(string='Remove After',
                                     help='Automatically delete stored backups after this specified number of days')
-    google_drive_folderid = fields.Char(string='Drive Folder ID')
+    google_drive_folder_key = fields.Char(string='Drive Folder ID')
     gdrive_refresh_token = fields.Char(string='Google drive Refresh Token',
                                        copy=False,
                                        help='Refresh token for google drive')
