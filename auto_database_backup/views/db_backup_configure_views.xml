@@ -65,8 +65,52 @@
                                    password="True"/>
                             <field name="sftp_path"
                                    attrs="{'invisible': [('backup_destination', '!=', 'sftp')], 'required': [('backup_destination', '=', 'sftp')]}"/>
-                            <field name="google_drive_folderid"
+                            <field name="gdrive_client_key" string="Client ID"
                                    attrs="{'invisible': [('backup_destination', '!=', 'google_drive')], 'required': [('backup_destination', '=', 'google_drive')]}"/>
+                            <field name="gdrive_client_secret"
+                                   string="Client Secret"
+                                   attrs="{'invisible': [('backup_destination', '!=', 'google_drive')], 'required': [('backup_destination', '=', 'google_drive')]}"
+                                   password="True"/>
+                            <field name="gdrive_redirect_uri"
+                                   string="Redirect URI"
+                                   attrs="{'invisible': [('backup_destination', '!=', 'google_drive')]}"/>
+                            <field name="gdrive_access_token" password="True"
+                                   invisible="1"/>
+                            <field name="gdrive_refresh_token" password="True"
+                                   invisible="1"/>
+                            <field name="gdrive_token_validity" invisible="1"/>
+                            <field name="google_drive_folder_key"
+                                   attrs="{'invisible': [('backup_destination', '!=', 'google_drive')], 'required': [('backup_destination', '=', 'google_drive')]}"/>
+                            <field name="is_google_drive_token_generated"
+                                   invisible="1"/>
+                            <div attrs="{'invisible': [('backup_destination', '!=', 'google_drive')]}">
+                                <div attrs="{'invisible': ['|', ('backup_destination', '!=', 'google_drive'), ('is_google_drive_token_generated', '=', False)]}">
+                                    <i class="text-success fa fa-check"/>
+                                    Refresh token set
+                                </div>
+                                <div attrs="{'invisible': ['|', ('backup_destination', '!=', 'google_drive'), ('is_google_drive_token_generated', '=', True)]}">
+                                    <i class="fa fa-exclamation-triangle text-warning"/>
+                                    No refresh token set
+                                </div>
+                            </div>
+                            <div attrs="{'invisible': [('backup_destination', '!=', 'google_drive')]}">
+                                <div attrs="{'invisible': ['|', ('backup_destination', '!=', 'google_drive'), ('is_google_drive_token_generated', '=', True)]}">
+                                    <button class="btn btn-link"
+                                            name="action_get_gdrive_auth_code"
+                                            type="object">
+                                        <i class="fa fa-arrow-right"/>
+                                        Setup Token
+                                    </button>
+                                </div>
+                                <div attrs="{'invisible': ['|', ('backup_destination', '!=', 'google_drive'), ('is_google_drive_token_generated', '=', False)]}">
+                                    <button class="btn btn-link"
+                                            name="action_get_gdrive_auth_code"
+                                            type="object">
+                                        <i class="fa fa-arrow-right"/>
+                                        Reset Token
+                                    </button>
+                                </div>
+                            </div>
                             <field name="auto_remove"/>
                             <label for="days_to_remove" class="oe_inline"
                                    attrs="{'invisible': [('auto_remove', '=', False)]}"/>
