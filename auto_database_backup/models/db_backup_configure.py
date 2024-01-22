@@ -26,6 +26,7 @@ import odoo
 from odoo.service import db
 from odoo.http import request
 from werkzeug import urls
+from datetime import timedelta
 
 import datetime
 import os
