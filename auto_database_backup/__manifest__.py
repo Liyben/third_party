@@ -23,10 +23,10 @@
 {
     'name': "Automatic Database Backup",
     'version': '14.0.1.0.0',
-    'summary': """Generate automatic backup of databases and store to local, google drive or remote server""",
+    'summary': """Generate automatic backup of databases and store to local, google drive or remote server. Adapted by Liyben for 14.0 version.""",
     'description': """This module has been developed for creating database backups automatically 
                     and store it to the different locations.""",
-    'author': "Cybrosys Techno Solutions",
+    'author': "Cybrosys Techno Solutions. Adapted by Liyben for 14.0 version",
     'website': "https://www.cybrosys.com",
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
