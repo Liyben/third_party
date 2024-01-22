@@ -24,7 +24,7 @@ from odoo import http
 from odoo.http import request
 
 
-class OnedriveAuth(http.Controller):
+class GdriveAuth(http.Controller):
     """Controller for handling authentication with Google Drive."""
 
     @http.route('/google_drive/authentication', type='http', auth="public")
@@ -34,6 +34,6 @@ class OnedriveAuth(http.Controller):
         backup_config = request.env['db.backup.configure'].sudo().browse(
             state.get('backup_config_id'))
         backup_config.get_gdrive_tokens(kw.get('code'))
-        backup_config.hide_active = True
-        backup_config.active = True
+        #backup_config.hide_active = True
+        #backup_config.active = True
         return request.redirect(state.get('url_return'))
