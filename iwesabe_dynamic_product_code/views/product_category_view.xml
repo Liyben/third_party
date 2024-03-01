@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="seq_product_category_form_view" model="ir.ui.view">
+			<field name="name">product.category.form_seq</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view"/>
+			<field name="arch" type="xml">
+				<sheet position="before">
+					<header>
+						<button name="open_sequence_changes" string="Modify Sequence" type="object" class="btn btn-primary"/>
+					</header>
+				</sheet>
+			</field>
+		</record>
+	</data>
+</odoo>
